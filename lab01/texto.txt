@@ -1,0 +1,15 @@
+eee_W_2308289@runweb89827:~$ ssh -i ~/.ssh/labsuser.pem ec2-user@54.165.44.130
+The authenticity of host '54.165.44.130 (54.165.44.130)' can't be established.
+ECDSA key fingerprint is SHA256:YWyNQFxtj76qVz10ltxwNNx/ZiR7R8oxm10Tnj4o2ks.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '54.165.44.130' (ECDSA) to the list of known hosts.
+Register this system with Red Hat Insights: insights-client --register
+Create an account or view all your systems at https://red.ht/insights-dashboard
+Last login: Fri Aug 18 17:24:16 2023 from 18.237.234.78
+[ec2-user@ip-172-31-40-80 ~]$ ls
+OS-lab
+[ec2-user@ip-172-31-40-80 ~]$ cd OS-lab
+[ec2-user@ip-172-31-40-80 OS-lab]$ ./hello
+Hello World!
+Olá mundo!
+ハローワールド！[ec2-user@ip-172-31-40-80 OS-lab]$ 
