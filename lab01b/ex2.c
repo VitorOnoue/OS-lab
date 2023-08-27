@@ -27,4 +27,5 @@ int main(){
 	else{
 		printf("\nE");
 	}
+	return 0;
 }

@@ -11,4 +11,5 @@ int main(){
 	else{
 		printf("%s, %s", n1, n2);
 	}
+	return 0;
 }

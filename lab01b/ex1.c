@@ -24,4 +24,5 @@ int main() {
     }
   }
   printf("\nNúmero da linha com o menor número: %d", r);
+  return 0;
 }

@@ -12,4 +12,5 @@ int main(){
 		y++;
 		x--;
 	}
+	return 0;
 }
