@@ -1,0 +1,2 @@
+Como escrito nos comentários da entrega no moodle, estava aprendendo/aplicando rebase neste repositório e por isso, todos os commits ficaram com o mesmo horário, que está fora do prazo. (após terminar o rebase, foi utilizado git push --force).
+Há uma print no repositório que há o reflog dos rebases.
