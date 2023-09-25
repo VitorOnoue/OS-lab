@@ -1,56 +1,66 @@
-#define _GNU_SOURCE
-#include <malloc.h>
-#include <sched.h>
-#include <signal.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-// 64kB stack
-#define FIBER_STACK 1024 * 64
+
 struct c {
   int saldo;
 };
 typedef struct c conta;
+
 conta from, to;
 int valor;
-// The child thread will execute this function
-int transferencia(void *arg) {
-  if (from.saldo >= valor) { // 2
+
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+void *transferencia(void *arg) {
+  int *i = (int *)arg;
+  pthread_mutex_lock(&mutex);
+  printf("lock\n");
+  if (from.saldo >= valor) {
     from.saldo -= valor;
     to.saldo += valor;
   }
+  pthread_mutex_unlock(&mutex);
+  printf("unlock\n");
   printf("Transferência concluída com sucesso!\n");
   printf("Saldo de c1: %d\n", from.saldo);
   printf("Saldo de c2: %d\n", to.saldo);
   return 0;
 }
+
 int main() {
-  void *stack;
-  pid_t pid;
-  int i;
-  // Allocate the stack
-  stack = malloc(FIBER_STACK);
-  if (stack == 0) {
-    perror("malloc: could not allocate stack");
+  int i, f, t, p;
+  printf("\nValor da conta from: ");
+  if (scanf("%d", &f) != 1) {
+    printf("Valor inválido.\n");
     exit(1);
   }
-  // Todas as contas começam com saldo 100
-  from.saldo = 100;
-  to.saldo = 100;
-  printf("Transferindo 10 para a conta c2\n");
-  valor = 10;
-  for (i = 0; i < 10; i++) {
-    // Call the clone system call to create the child thread
-    pid = clone(&transferencia, (char *)stack + FIBER_STACK,
-                SIGCHLD | CLONE_FS | CLONE_FILES | CLONE_SIGHAND | CLONE_VM, 0);
-    if (pid == -1) {
-      perror("clone");
-      exit(2);
+  printf("\nValor da conta to: ");
+  if (scanf("%d", &t) != 1) {
+    printf("Valor inválido.\n");
+    exit(1);
+  }
+  from.saldo = f;
+  to.saldo = t;
+  printf("\nQuantidade de transferências simultâneas (até 100): ");
+  if (scanf("%d", &p) != 1) {
+    printf("Valor inválido.\n");
+    exit(1);
+  }
+  valor = f/p;
+  printf("\nTransferindo %d para a conta to\n", f);
+  int e;
+  pthread_t thread[p];
+  for (i = 0; i < p; i++) {
+    printf("criando thread %d\n", i);
+    e = pthread_create(&thread[i], NULL, transferencia, NULL);
+    if (e != 0) {
+      perror("error");
     }
   }
-  // Free the stack
-  free(stack);
-  printf("Transferências concluídas e memória liberada.\n");
+  for (i = 0; i < p; i++) {
+    pthread_join(thread[i], NULL);
+  }
+  printf("\nTransferências concluídas e memória liberada.\n");
   return 0;
 }
