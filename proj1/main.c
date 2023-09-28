@@ -25,6 +25,10 @@ void *transferencia(void *arg) {
     to.saldo -= valor;
     from.saldo += valor;
   }
+  else{
+    printf("Saldo insuficiente para transferir.\n");
+    exit(1);
+  }
   pthread_mutex_unlock(&mutex); // mutex libera as áreas críticas para as outras threads
   printf("Transferência concluída com sucesso!\n");
   printf("Saldo de from: %d\n", from.saldo);
@@ -87,4 +91,4 @@ int main() {
   pthread_mutex_destroy(&mutex);
   printf("\nTransferências concluídas e memória liberada.\n");
   return 0;
-}
+}                                                                                                                      
