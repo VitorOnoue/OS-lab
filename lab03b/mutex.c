@@ -38,6 +38,7 @@ int main(){
   for (long i = 0; i < amount; i++) {
     pthread_join(threads[i], NULL);
   }
+  printf("Quantidade de threads: %d\n", amount);
   printf("pi = %Lf\n", sum * 4);
   return 0;
 }
