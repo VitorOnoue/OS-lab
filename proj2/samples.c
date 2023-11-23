@@ -5,7 +5,7 @@ struct pessoa {
   int chegada;
   int direcao;
 };
-void solve(FILE *f, int n, int i) {
+void escada(FILE *f, int n, int i) {
   struct pessoa array[n];
   for (int i = 0; i < n; i++) {
     fscanf(f, "%d %d", &array[i].chegada, &array[i].direcao);
@@ -53,7 +53,7 @@ int main() {
     printf("%s - ", teste);
     f = fopen(teste, "r");
     fscanf(f, "%d", &n);
-    solve(f, n, i);
+    escada(f, n, i);
     fclose(f);
   }
   return 0;
